@@ -16,7 +16,7 @@ class Student:
         else:
             return 'Error'
 
-    def average_grades_home(self):
+    def average_grade(self):
         sum_grades = 0
         len_grades = 0
         for course in self.grades.values():
@@ -26,9 +26,14 @@ class Student:
         return avg_grade
 
     def __str__(self):
-        text = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.average_grades_home()}\nКурсы в процессе изучения: {",".join(self.courses_in_progress)}\nЗавершенные курсы:{", ".join(self.finished_courses)}'
+        text = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.average_grade()}\nКурсы в процессе изучения: {",".join(self.courses_in_progress)}\nЗавершенные курсы:{", ".join(self.finished_courses)}'
         return text
 
+    def __lt__(self, other):
+        if not isinstance(other, Student):
+            print("Нельзя сравнивать!")
+            return
+        return self.average_grade() < other.average_grade()
 
 class Mentor:
     def __init__(self, name, surname):
@@ -42,7 +47,7 @@ class Lecturer(Mentor):
         super.__init__(name, surname)
         self.grades = {}
 
-    def average_grade_lecture(self):
+    def average_grade(self):
         sum_grades = 0
         len_grades = 0
         for course in self.grades.values():
@@ -52,8 +57,14 @@ class Lecturer(Mentor):
         return avg_grades
 
     def __str__(self):
-        return f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.average_grade_lecture()}'
+        text = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.average_grade()}'
+        return text
 
+    def __lt__(self, other):
+        if not isinstance(other, Student):
+            print("Нельзя сравнивать!")
+            return
+        return self.average_grade() < other.average_grade()
 
 class Reviewer(Mentor):
     def __int__(self, name, surname):
@@ -71,4 +82,62 @@ class Reviewer(Mentor):
     def __str__(self):
         return f'Имя: {self.name}\nФамилия: {self.surname}'
 
+# Студенты Студентовы
 
+student_1 = Student('Иван', 'Студентов', 'м')
+student_1.courses_in_progress += ['Goland']
+student_1.finished_courses += ['Python']
+
+student_2 = Student('Мария', 'Студентова', 'ж')
+student_2.courses_in_progress += ['Goland']
+student_2.finished_courses += ['Python']
+
+# Лекторы Лекторовы
+
+lecturer_1 = Lecturer('Анастасия', 'Лекторова')
+lecturer_1.courses_attached += ['Goland']
+
+lecturer_2 = Lecturer('Милана', 'Лекторова')
+lecturer_1.courses_attached += ['Goland']
+
+# Проверяющие Проверяловы
+
+reviewer_1 = Reviewer('Владимир', 'Проверялов')
+reviewer_1.courses_attached += ['Goland']
+
+reviewer_2 = Reviewer('Степан', 'Проверялов')
+reviewer_2.courses_attached += ['Goland']
+
+# Оценки Студентовым за домашнее задание
+
+reviewer_1.rate_hw(student_1, 'Goland', 8)
+reviewer_1.rate_hw(student_1, 'Goland', 10)
+reviewer_1.rate_hw(student_1, 'Goland', 6)
+
+reviewer_2.rate_hw(student_2, 'Goland', 2)
+reviewer_2.rate_hw(student_2, 'Goland', 1)
+reviewer_2.rate_hw(student_2, 'Goland', 4)
+
+# Оценки Лекторовым за лекцию
+
+student_1.rate_lecture(reviewer_1, 'Goland', 10)
+student_1.rate_lecture(reviewer_1, 'Goland', 8)
+student_1.rate_lecture(reviewer_1, 'Goland', 5)
+
+student_2.rate_lecture(reviewer_2, 'Goland', 7)
+student_2.rate_lecture(reviewer_2, 'Goland', 8)
+student_2.rate_lecture(reviewer_2, 'Goland', 5)
+
+print('=' * 10)
+print(student_1)
+print('-' * 10)
+print(student_2)
+print('=' * 10)
+print(lecturer_1)
+print('-' * 10)
+print(lecturer_2)
+print('=' * 10)
+print(reviewer_1)
+print('-' * 10)
+print(reviewer_2)
+print('=' * 10)
