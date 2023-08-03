@@ -8,23 +8,52 @@ class Student:
         self.grades = {}
 
     def rate_lecture(self, lecturer, course, grade):
-        if isinstance(lecturer, Lecturer) and course in self.finished_courses and course in self.finished_courses:
-            if course in lecturer.lecture:
-                lecturer.lecture[course] += [grade]
+        if isinstance(lecturer, Lecturer) and course in lecturer.courses_attached:
+            if course in lecturer.grades:
+                lecturer.grades[course] += [grade]
             else:
-                lecturer.lecture[course] = [grade]
+                lecturer.grades[course] = [grade]
         else:
             return 'Error'
+
+    def average_grades_home(self):
+        sum_grades = 0
+        len_grades = 0
+        for course in self.grades.values():
+            sum_grades += sum(course)
+            len_grades += len(course)
+        avg_grade = round(sum_grades / len_grades, 1)
+        return avg_grade
+
+    def __str__(self):
+        text = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.average_grades_home()}\nКурсы в процессе изучения: {",".join(self.courses_in_progress)}\nЗавершенные курсы:{", ".join(self.finished_courses)}'
+        return text
+
+
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
         self.surname = surname
         self.courses_attached = []
 
+
 class Lecturer(Mentor):
     def __int__(self, name, surname):
         super.__init__(name, surname)
-        self.lecture = {}
+        self.grades = {}
+
+    def average_grade_lecture(self):
+        sum_grades = 0
+        len_grades = 0
+        for course in self.grades.values():
+            sum_grades += sum(course)
+            len_grades += len(course)
+        avg_grades = round(sum_grades / len_grades, 1)
+        return avg_grades
+
+    def __str__(self):
+        return f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.average_grade_lecture()}'
+
 
 class Reviewer(Mentor):
     def __int__(self, name, surname):
@@ -39,16 +68,7 @@ class Reviewer(Mentor):
         else:
             return 'Error'
 
+    def __str__(self):
+        return f'Имя: {self.name}\nФамилия: {self.surname}'
 
-best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_student.courses_in_progress += ['Python']
-
-cool_reviewer = Reviewer('Some', 'Buddy')
-cool_reviewer.courses_attached += ['Python']
-
-cool_reviewer.rate_hw(best_student, 'Python', 10)
-cool_reviewer.rate_hw(best_student, 'Python', 10)
-cool_reviewer.rate_hw(best_student, 'Python', 10)
-
-print(best_student.grades)
 
