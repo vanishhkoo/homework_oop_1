@@ -35,6 +35,16 @@ class Student:
             return
         return self.average_grade() < other.average_grade()
 
+    def average_grades_for_course(self, course):
+        sum_grades = 0
+        len_grades = 0
+        for crs in self.grades.keys():
+            if crs == course:
+                sum_grades += sum(self.grades[course])
+                len_grades += len(self.grades[course])
+        avg_grade_crs = round(sum_grades / len_grades, 1)
+        return avg_grade_crs
+
 
 class Mentor:
     def __init__(self, name, surname):
@@ -66,6 +76,16 @@ class Lecturer(Mentor):
             print("Нельзя сравнивать!")
             return
         return self.average_grade() < other.average_grade()
+
+    def average_grades_for_course(self, course):
+        sum_grades = 0
+        len_grades = 0
+        for crs in self.grades.keys():
+            if crs == course:
+                sum_grades += sum(self.grades[course])
+                len_grades += len(self.grades[course])
+        avg_grade_crs = round(sum_grades / len_grades, 1)
+        return avg_grade_crs
 
 
 class Reviewer(Mentor):
@@ -130,6 +150,24 @@ student_2.rate_lecture(lecturer_2, 'Goland', 7)
 student_2.rate_lecture(lecturer_2, 'Goland', 8)
 student_2.rate_lecture(lecturer_2, 'Goland', 5)
 
+list_student = [student_1, student_2]
+list_lecturer = [lecturer_1, lecturer_2]
+list_reviewer = [reviewer_2, reviewer_1]
+
+def average_grade_for_course(course, list_student):
+    sum_grades = 0
+    qtl_grades = 0
+    for student in list_student:
+        for course in student.grades:
+            student_sum_grades = student.average_grades_for_course(course)
+            sum_grades += student_sum_grades
+            qtl_grades += 1
+    avg_grades = round(sum_grades / qtl_grades, 1)
+    return avg_grades
+
+print('=' * 10)
+print(f'Средняя оценка за домашнее задание всех студентов: {average_grade_for_course("Goland", list_student)}')
+print(f'Средняя оценка проведенные лекции по всем лекторам: {average_grade_for_course("Goland", list_lecturer)}')
 print('=' * 10)
 print(student_1)
 print('-' * 10)
