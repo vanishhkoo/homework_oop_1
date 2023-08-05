@@ -167,7 +167,7 @@ def average_grade_for_course(course, list_student):
 
 print('=' * 10)
 print(f'Средняя оценка за домашнее задание всех студентов: {average_grade_for_course("Goland", list_student)}')
-print(f'Средняя оценка проведенные лекции по всем лекторам: {average_grade_for_course("Goland", list_lecturer)}')
+print(f'Средняя оценка за проведенные лекции по всем лекторам: {average_grade_for_course("Goland", list_lecturer)}')
 print('=' * 10)
 print(student_1)
 print('-' * 10)
