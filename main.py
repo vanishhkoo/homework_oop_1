@@ -26,7 +26,7 @@ class Student:
         return avg_grade
 
     def __str__(self):
-        text = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.average_grade()}\nКурсы в процессе изучения: {",".join(self.courses_in_progress)}\nЗавершенные курсы:{", ".join(self.finished_courses)}'
+        text = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.average_grade()}\nКурсы в процессе изучения: {",".join(self.courses_in_progress)}\nЗавершенные курсы: {", ".join(self.finished_courses)}'
         return text
 
     def __lt__(self, other):
@@ -34,6 +34,7 @@ class Student:
             print("Нельзя сравнивать!")
             return
         return self.average_grade() < other.average_grade()
+
 
 class Mentor:
     def __init__(self, name, surname):
@@ -43,8 +44,8 @@ class Mentor:
 
 
 class Lecturer(Mentor):
-    def __int__(self, name, surname):
-        super.__init__(name, surname)
+    def __init__(self, name, surname):
+        super().__init__(name, surname)
         self.grades = {}
 
     def average_grade(self):
@@ -65,6 +66,7 @@ class Lecturer(Mentor):
             print("Нельзя сравнивать!")
             return
         return self.average_grade() < other.average_grade()
+
 
 class Reviewer(Mentor):
     def __int__(self, name, surname):
@@ -98,7 +100,7 @@ lecturer_1 = Lecturer('Анастасия', 'Лекторова')
 lecturer_1.courses_attached += ['Goland']
 
 lecturer_2 = Lecturer('Милана', 'Лекторова')
-lecturer_1.courses_attached += ['Goland']
+lecturer_2.courses_attached += ['Goland']
 
 # Проверяющие Проверяловы
 
@@ -120,13 +122,13 @@ reviewer_2.rate_hw(student_2, 'Goland', 4)
 
 # Оценки Лекторовым за лекцию
 
-student_1.rate_lecture(reviewer_1, 'Goland', 10)
-student_1.rate_lecture(reviewer_1, 'Goland', 8)
-student_1.rate_lecture(reviewer_1, 'Goland', 5)
+student_1.rate_lecture(lecturer_1, 'Goland', 10)
+student_1.rate_lecture(lecturer_1, 'Goland', 8)
+student_1.rate_lecture(lecturer_1, 'Goland', 5)
 
-student_2.rate_lecture(reviewer_2, 'Goland', 7)
-student_2.rate_lecture(reviewer_2, 'Goland', 8)
-student_2.rate_lecture(reviewer_2, 'Goland', 5)
+student_2.rate_lecture(lecturer_2, 'Goland', 7)
+student_2.rate_lecture(lecturer_2, 'Goland', 8)
+student_2.rate_lecture(lecturer_2, 'Goland', 5)
 
 print('=' * 10)
 print(student_1)
